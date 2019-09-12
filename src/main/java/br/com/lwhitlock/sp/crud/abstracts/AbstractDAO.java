@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.lwhitlock.sp.crud.abstracts;
 
-import br.com.lwhitlock.sp.crud.abstracts.IAbstractDAO;
 import br.com.lwhitlock.sp.crud.type.TypeQuery;
 import static br.com.lwhitlock.sp.crud.type.TypeQuery.NAMED_QUERY;
 import static br.com.lwhitlock.sp.crud.type.TypeQuery.NATIVE_QUERY;
@@ -17,7 +11,8 @@ import javax.persistence.Query;
 
 /**
  *
- * @author ra167363
+ * @author lwhitlock
+ * @param <T>
  */
 public abstract class AbstractDAO<T> implements IAbstractDAO<T> {
 

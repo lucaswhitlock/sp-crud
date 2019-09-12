@@ -4,15 +4,18 @@
 
     <jdbc-connection-pool name="jdbc/databasePool"
                           res-type="javax.sql.DataSource"
-                          datasource-classname="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+                          datasource-classname="com.microsoft.sqlserver.jdbc.SQLServerDataSource"
                           pool-resize-quantity="2"
                           max-pool-size="32"
                           steady-pool-size="8">
-        <property name="URL" value="jdbc:mysql://database:3306/test"/>
-        <property name="User" value="root"/>
-        <property name="Password" value="password"/>
+        <property name="ServerName" value="localhost"></property>
+        <property name="PortNumber" value="1433"></property>
+        <property name="DataBaseName" value="tempdb"></property>
+        <property name="User" value="SA"/>
+        <property name="Password" value="sqlsrv123"/>
+        <property name="SendStringParametersAsUnicode" value="false"></property>
+        <property name="useTimezone" value="true"></property>
     </jdbc-connection-pool>
- 
     <jdbc-resource enabled="true" jndi-name="jdbc/databaseDS" object-type="user" pool-name="jdbc/databasePool"></jdbc-resource>
  
 </resources>
