@@ -11,8 +11,8 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.ObserverException;
 import javax.enterprise.event.Observes;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 @RequestScoped
 public class PessoaCPFInvalido {
 
-    private Logger log = LoggerFactory.getLogger(PessoaCPFInvalido.class);
+    private Logger log = LogManager.getLogger(PessoaCPFInvalido.class);
 
     private final List<String> invalidos = Arrays.asList("00000000000", "11111111111", "22222222222", "33333333333", "44444444444", "55555555555", "66666666666", "77777777777", "88888888888", "99999999999");
 

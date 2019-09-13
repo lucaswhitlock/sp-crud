@@ -22,10 +22,10 @@ public class AgrupadoraValidacoes {
     @Inject
     private Event<Pessoa> eventPessoa;
 
-    public void validar(Pessoa pessoa, DAO dao) throws Exception {
+    public void validar(Pessoa pessoa, DAO dao, Boolean isUpdate) throws Exception {
         try {
             eventPessoa.fire(pessoa);
-            if (dao.pessoaJaExistente(pessoa)) {
+            if (!isUpdate && dao.pessoaJaExistente(pessoa)) {
                 throw new Exception("Pessoa informada já existente!");
             }
         } catch (ObserverException e) {

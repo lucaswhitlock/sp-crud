@@ -9,8 +9,8 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 @LocalBean
 public class DAO extends AbstractDAO {
 
-    private Logger log = LoggerFactory.getLogger(DAO.class);
+    private Logger log = LogManager.getLogger(DAO.class);
 
     @Override
     @PersistenceContext(unitName = "default-pu")

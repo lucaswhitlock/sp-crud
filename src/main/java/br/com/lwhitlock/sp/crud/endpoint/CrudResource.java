@@ -9,13 +9,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.Path;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * REST Web Service
@@ -26,7 +28,7 @@ import org.slf4j.LoggerFactory;
 @RequestScoped
 public class CrudResource {
 
-    private Logger log = LoggerFactory.getLogger(CrudResource.class);
+    private Logger log = LogManager.getLogger(CrudResource.class);
     @EJB
     private ApiService apiService;
 
@@ -38,7 +40,7 @@ public class CrudResource {
         ResponseModel responseModel = new ResponseModel();
         try {
             apiService.cadastrarPessoa(pessoa);
-            responseModel.getMessages().add(new Message(Response.Status.CREATED.getStatusCode(), "Pessoa cadastrada com sucesso!"));
+            responseModel.getMessages().add(new Message(Response.Status.OK.getStatusCode(), "Pessoa cadastrada com sucesso!"));
         } catch (Exception e) {
             log.error(e.getMessage());
             responseModel.getMessages().add(new Message(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), "Erro ao processar dados: " + e.getMessage()));
@@ -54,6 +56,36 @@ public class CrudResource {
         try {
             responseModel.setData(apiService.buscarPessoaPorId(id));
             responseModel.getMessages().add(new Message(Response.Status.OK.getStatusCode(), "Pessoa encontrada com sucesso!"));
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseModel.getMessages().add(new Message(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), "Erro ao processar dados: " + e.getMessage()));
+        }
+        return Response.ok(responseModel).build();
+    }
+
+    @PUT
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response atualizar(Pessoa pessoa) {
+        ResponseModel responseModel = new ResponseModel();
+        try {
+            apiService.atualizarPessoa(pessoa);
+            responseModel.getMessages().add(new Message(Response.Status.OK.getStatusCode(), "Pessoa atualizada com sucesso!"));
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseModel.getMessages().add(new Message(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), "Erro ao processar dados: " + e.getMessage()));
+        }
+        return Response.ok(responseModel).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response remover(@PathParam(value = "id") Long id) {
+        ResponseModel responseModel = new ResponseModel();
+        try {
+            apiService.removerPessoa(id);
+            responseModel.getMessages().add(new Message(Response.Status.OK.getStatusCode(), "Pessoa removida com sucesso!"));
         } catch (Exception e) {
             log.error(e.getMessage());
             responseModel.getMessages().add(new Message(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), "Erro ao processar dados: " + e.getMessage()));

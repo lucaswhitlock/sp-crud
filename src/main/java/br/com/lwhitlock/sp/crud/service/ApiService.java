@@ -31,7 +31,7 @@ public class ApiService {
     private AgrupadoraValidacoes agrupadoraValidacoes;
 
     public void cadastrarPessoa(Pessoa pessoa) throws Exception {
-        agrupadoraValidacoes.validar(pessoa, dao);
+        agrupadoraValidacoes.validar(pessoa, dao, Boolean.FALSE);
         //Atualiza datas obrigatórias
         pessoa.setDataAtualizacao(new Date());
         if (pessoa.getDataCadastro() == null) {
@@ -47,4 +47,18 @@ public class ApiService {
         return resultList;
     }
 
+    public void atualizarPessoa(Pessoa pessoa) throws Exception {
+        agrupadoraValidacoes.validar(pessoa, dao, Boolean.TRUE);
+        pessoa.setDataAtualizacao(new Date());
+        dao.atualizar(pessoa);
+    }
+
+    public void removerPessoa(Long id) throws Exception {
+        Pessoa pessoa = dao.buscarPessoaPorId(id);
+        if (pessoa != null) {
+            dao.excluir(pessoa);
+        } else {
+            throw new Exception("Pessoa informada nao encontrada!");
+        }
+    }
 }
