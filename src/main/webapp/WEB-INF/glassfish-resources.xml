@@ -8,7 +8,7 @@
                           pool-resize-quantity="2"
                           max-pool-size="32"
                           steady-pool-size="8">
-        <property name="ServerName" value="localhost"></property>
+        <property name="ServerName" value="sql1"></property>
         <property name="PortNumber" value="1433"></property>
         <property name="DataBaseName" value="tempdb"></property>
         <property name="User" value="SA"/>

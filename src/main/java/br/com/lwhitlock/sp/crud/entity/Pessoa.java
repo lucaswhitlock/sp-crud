@@ -1,6 +1,7 @@
 package br.com.lwhitlock.sp.crud.entity;
 
 import java.io.Serializable;
+import java.util.Base64;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -60,11 +61,14 @@ public class Pessoa implements Serializable {
     @Column(name = "dataAtualizacao", nullable = false)
     private Date dataAtualizacao;
 
+    @Column(name = "senha", nullable = false)
+    private String senha;
+
     public Pessoa() {
         this.dataAtualizacao = new Date();
     }
 
-    public Pessoa(Long id, String nome, String sexo, String email, Date dataNascimento, String naturalidade, String nacionalidade, String cpf, Date dataCadastro, Date dataAtualizacao) {
+    public Pessoa(Long id, String nome, String sexo, String email, Date dataNascimento, String naturalidade, String nacionalidade, String cpf, Date dataCadastro, String senha) {
         this.id = id;
         this.nome = nome;
         this.sexo = sexo;
@@ -74,7 +78,8 @@ public class Pessoa implements Serializable {
         this.nacionalidade = nacionalidade;
         this.cpf = cpf;
         this.dataCadastro = dataCadastro;
-        this.dataAtualizacao = dataAtualizacao;
+        this.dataAtualizacao = new Date();
+        this.senha = senha;
     }
 
     public Long getId() {
@@ -155,6 +160,14 @@ public class Pessoa implements Serializable {
 
     public void setDataAtualizacao(Date dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
+    }
+
+    public String getSenha() {
+        return new String(Base64.getDecoder().decode(this.senha));
+    }
+
+    public void setSenha(String senha) {
+        this.senha = Base64.getEncoder().encodeToString(senha.getBytes());
     }
 
 }

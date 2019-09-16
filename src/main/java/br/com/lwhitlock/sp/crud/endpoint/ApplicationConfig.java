@@ -28,6 +28,7 @@ public class ApplicationConfig extends Application {
     }
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(br.com.lwhitlock.sp.crud.endpoint.CORSFilter.class);
         resources.add(br.com.lwhitlock.sp.crud.endpoint.CrudResource.class);
     }
 }

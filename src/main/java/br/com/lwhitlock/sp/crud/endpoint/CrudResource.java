@@ -1,5 +1,6 @@
 package br.com.lwhitlock.sp.crud.endpoint;
 
+import br.com.lwhitlock.sp.crud.entity.Login;
 import br.com.lwhitlock.sp.crud.entity.Pessoa;
 import br.com.lwhitlock.sp.crud.service.ApiService;
 import br.com.lwhitlock.sp.crud.type.Message;
@@ -66,6 +67,7 @@ public class CrudResource {
     @PUT
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response atualizar(Pessoa pessoa) {
         ResponseModel responseModel = new ResponseModel();
         try {
@@ -86,6 +88,22 @@ public class CrudResource {
         try {
             apiService.removerPessoa(id);
             responseModel.getMessages().add(new Message(Response.Status.OK.getStatusCode(), "Pessoa removida com sucesso!"));
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            responseModel.getMessages().add(new Message(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), "Erro ao processar dados: " + e.getMessage()));
+        }
+        return Response.ok(responseModel).build();
+    }
+
+    @POST
+    @Path("/login")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response login(Login login) {
+        ResponseModel responseModel = new ResponseModel();
+        try {
+            apiService.login(login);
+            responseModel.getMessages().add(new Message(Response.Status.OK.getStatusCode(), "Login efetuado com sucesso!"));
         } catch (Exception e) {
             log.error(e.getMessage());
             responseModel.getMessages().add(new Message(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), "Erro ao processar dados: " + e.getMessage()));

@@ -29,7 +29,7 @@ public class AgrupadoraValidacoes {
                 throw new Exception("Pessoa informada já existente!");
             }
         } catch (ObserverException e) {
-            throw new Exception(e.getCause());
+            throw new Exception(e.getMessage());
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }

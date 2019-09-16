@@ -6,6 +6,7 @@
 package br.com.lwhitlock.sp.crud.service;
 
 import br.com.lwhitlock.sp.crud.dao.DAO;
+import br.com.lwhitlock.sp.crud.entity.Login;
 import br.com.lwhitlock.sp.crud.entity.Pessoa;
 import br.com.lwhitlock.sp.crud.validate.AgrupadoraValidacoes;
 import java.util.ArrayList;
@@ -59,6 +60,17 @@ public class ApiService {
             dao.excluir(pessoa);
         } else {
             throw new Exception("Pessoa informada nao encontrada!");
+        }
+    }
+
+    public Boolean login(Login login) throws Exception {
+        Pessoa pessoa = dao.buscarPessoaPorCPF(login.getCpf());
+        if (pessoa != null && !pessoa.getSenha().equals(login.getSenha())) {
+            throw new Exception("Senha incorreta!");
+        } else if (pessoa == null) {
+            throw new Exception("Pessoa não encontrada!");
+        } else {
+            return Boolean.TRUE;
         }
     }
 }
